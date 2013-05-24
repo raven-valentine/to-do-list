@@ -22,7 +22,7 @@ SITE_DESCRIPTION = "..becoss i'm too busy to remember everything in my head"
 enable :sessions
 #use Rack::Flash, :sweep => true
 
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db")
+DataMapper::setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/recall.db")
 DataMapper.auto_upgrade!
 
 helpers do

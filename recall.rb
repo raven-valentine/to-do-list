@@ -100,7 +100,7 @@ get '/:id/delete' do |id|
 	end
 end
 
-delete '/:id' do |id|
+post '/:id/delete' do |id|
 	n = Note.get id.to_i
 	if n.destroy
 		redirect '/'

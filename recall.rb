@@ -4,14 +4,6 @@ require 'time'
 #require 'rack-flash'
 #require 'sinatra/redirect_with_flash'
 
-SITE_TITLE = "To do list"
-SITE_DESCRIPTION = "..becoss i'm too busy to remember everything in my head"
-
-enable :sessions
-#use Rack::Flash, :sweep => true
-
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db")
-
 class Note
 	include DataMapper::Resource
 	property :id, Serial
@@ -21,6 +13,16 @@ class Note
 	property :updated_at, DateTime
 end
 
+class Recall < Sinatra::Base
+
+
+SITE_TITLE = "To do list"
+SITE_DESCRIPTION = "..becoss i'm too busy to remember everything in my head"
+
+enable :sessions
+#use Rack::Flash, :sweep => true
+
+DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db")
 DataMapper.auto_upgrade!
 
 helpers do
@@ -71,7 +73,7 @@ get '/:id' do |id|
 	end
 end
 
-put '/:id' do |id|
+post '/:id' do |id|
 	n = Note.get id.to_i
 	unless n
 		redirect '/'
@@ -121,4 +123,6 @@ get '/:id/complete' do |id|
 	else
 		redirect '/'
 	end
+end
+
 end
